@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Model Gallery | 模型圖庫</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-section">
+                <h1>AI 模型藝廊</h1>
+            </div>
+            <div class="controls">
+                <input type="text" id="searchInput" class="search-bar" placeholder="搜尋模型名稱 or 標籤...">
+                <button id="manageBtn" class="btn-primary">管理模式</button>
+                <button id="addBtn" class="btn-primary" style="background: #10b981; display: none;">新增圖片</button>
+                <button id="resetBtn" class="btn-primary" style="background: #475569; display: none;">重設資料</button>
+            </div>
+        </header>
+
+        <main id="gallery" class="gallery-grid">
+            <!-- Images will be injected here by JS -->
+        </main>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 1.5rem;">編輯模型資訊</h2>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>名稱</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>描述</label>
+                    <textarea id="editDesc" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>標籤 (以逗號分隔)</label>
+                    <input type="text" id="editTags">
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn-primary" style="background: #475569;" onclick="closeModal()">取消</button>
+                    <button type="submit" class="btn-primary">儲存變更</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 1.5rem;">新增模型圖片</h2>
+            <form id="addForm">
+                <div class="form-group">
+                    <label>圖片來源</label>
+                    <select id="imageSourceType" onchange="toggleImageInputType()">
+                        <option value="folder">從 images 資料夾選擇</option>
+                        <option value="upload">從電腦上傳新檔案</option>
+                    </select>
+                </div>
+                <div class="form-group" id="folderInputGroup">
+                    <label>選擇圖片 (來自 images 資料夾)</label>
+                    <select id="folderFileSelect">
+                        <!-- Options will be injected by JS -->
+                    </select>
+                </div>
+                <div class="form-group" id="uploadInputGroup" style="display: none;">
+                    <label>圖片檔案</label>
+                    <input type="file" id="addFile" accept="image/*">
+                    <small style="color: #94a3b8; display: block; margin-top: 0.5rem;">建議大小 2MB 以下</small>
+                </div>
+                <div class="form-group">
+                    <label>名稱</label>
+                    <input type="text" id="addTitle" placeholder="例如：新模型 A" required>
+                </div>
+                <div class="form-group">
+                    <label>描述</label>
+                    <textarea id="addDesc" rows="3" placeholder="請輸入模型描述..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>標籤 (以逗號分隔)</label>
+                    <input type="text" id="addTags" placeholder="建築, 概念, 3D">
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn-primary" style="background: #475569;" onclick="closeAddModal()">取消</button>
+                    <button type="submit" class="btn-primary">新增到圖庫</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
+        <img id="lightboxImg" src="" alt="完整檢視">
+        <div id="lightboxTitle" style="margin-top: 1rem; font-size: 1.2rem; font-weight: 600;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

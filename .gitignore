@@ -1,0 +1,10 @@
+# IDEs
+.vscode/
+.idea/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# User data (optional: if you want to keep local changes out of git)
+# gallery_data (this is in localStorage, so not a file)
