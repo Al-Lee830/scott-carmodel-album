@@ -198,6 +198,7 @@ function toggleManageMode() {
     const searchInput = document.getElementById('searchInput');
 
     isManageMode = !isManageMode;
+    if (!isManageMode) isLoggedIn = false; // 退出時重設登入狀態
     manageBtn.textContent = isManageMode ? '結束管理' : '管理模式';
     manageBtn.style.background = isManageMode ? 'linear-gradient(135deg, #f43f5e, #e11d48)' : 'linear-gradient(135deg, #38bdf8, #2563eb)';
     resetBtn.style.display = isManageMode ? 'block' : 'none';
