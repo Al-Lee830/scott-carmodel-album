@@ -37,9 +37,11 @@ const ADMIN_PASSWORD = 'admin'; // 您可以在此修改管理密碼
 let galleryData = JSON.parse(localStorage.getItem('gallery_data')) || initialImages;
 let isManageMode = false;
 let isLoggedIn = false;
+let activeFilter = '全部';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    renderFilterPills();
     renderGallery();
     setupEventListeners();
     populateFolderSelect();
@@ -58,31 +60,55 @@ function toggleImageInputType() {
     document.getElementById('uploadInputGroup').style.display = type === 'upload' ? 'block' : 'none';
 }
 
+function renderFilterPills() {
+    const filterPills = document.getElementById('filterPills');
+    const allTags = ['全部', ...new Set(galleryData.flatMap(img => img.tags))];
+    
+    filterPills.innerHTML = allTags.map(tag => {
+        const count = tag === '全部' ? galleryData.length : galleryData.filter(img => img.tags.includes(tag)).length;
+        return `
+            <div class="filter-pill ${tag === activeFilter ? 'active' : ''}" onclick="setFilter('${tag}')">
+                ${tag} <span style="opacity: 0.6; font-size: 0.8rem; margin-left: 0.3rem;">${count}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function setFilter(tag) {
+    activeFilter = tag;
+    renderFilterPills();
+    renderGallery(document.getElementById('searchInput').value);
+}
+
 function renderGallery(filterText = '') {
     const gallery = document.getElementById('gallery');
     gallery.innerHTML = '';
 
-    const filtered = galleryData.filter(img => 
-        img.title.toLowerCase().includes(filterText.toLowerCase()) ||
-        img.tags.some(t => t.toLowerCase().includes(filterText.toLowerCase()))
-    );
+    const filtered = galleryData.filter(img => {
+        const matchesSearch = img.title.toLowerCase().includes(filterText.toLowerCase()) ||
+                             img.tags.some(t => t.toLowerCase().includes(filterText.toLowerCase()));
+        const matchesFilter = activeFilter === '全部' || img.tags.includes(activeFilter);
+        return matchesSearch && matchesFilter;
+    });
 
     filtered.forEach(img => {
+        const primaryTag = img.tags[0] || '模型';
         const card = document.createElement('div');
         card.className = 'image-card';
         card.innerHTML = `
             <div class="image-wrapper" onclick="openLightbox('${img.url}', '${img.title}')">
+                <div class="card-badge">${primaryTag}</div>
                 <img src="${img.url}" alt="${img.title}" loading="lazy">
             </div>
             <div class="image-info">
                 <div style="display: flex; justify-content: space-between; align-items: start;">
-                    <h3>${img.title}</h3>
+                    <h3 style="font-weight: 700; letter-spacing: -0.5px;">${img.title}</h3>
                     <div style="display: flex; gap: 0.5rem;">
                         ${isManageMode ? `<button class="btn-primary" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="openEditModal('${img.id}')">編輯</button>` : ''}
                         ${isManageMode ? `<button class="btn-primary" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; background: #ef4444;" onclick="deleteImage('${img.id}')">刪除</button>` : ''}
                     </div>
                 </div>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.8rem;">${img.description}</p>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.5;">${img.description}</p>
                 <div class="image-tags">
                     ${img.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
                 </div>
@@ -218,6 +244,7 @@ function deleteImage(id) {
     if (confirm('確定要刪除這張圖片嗎？')) {
         galleryData = galleryData.filter(img => img.id !== id);
         localStorage.setItem('gallery_data', JSON.stringify(galleryData));
+        renderFilterPills(); // 更新標籤統計
         renderGallery(document.getElementById('searchInput').value);
     }
 }
@@ -265,6 +292,7 @@ function addNewImage() {
 
 function saveAndRefresh() {
     localStorage.setItem('gallery_data', JSON.stringify(galleryData));
+    renderFilterPills(); // 更新標籤統計
     renderGallery(document.getElementById('searchInput').value);
     closeAddModal();
 }
@@ -279,6 +307,7 @@ function saveChanges() {
     if (index !== -1) {
         galleryData[index] = { ...galleryData[index], title, description: desc, tags };
         localStorage.setItem('gallery_data', JSON.stringify(galleryData));
+        renderFilterPills(); // 更新標籤統計
         renderGallery(document.getElementById('searchInput').value);
         closeModal();
     }
