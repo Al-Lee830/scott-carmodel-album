@@ -32,8 +32,11 @@ const availableImagesInFolder = [
     'ChatGPT Image 2026年5月14日 上午09_35_21.png'
 ];
 
+const ADMIN_PASSWORD = 'admin'; // 您可以在此修改管理密碼
+
 let galleryData = JSON.parse(localStorage.getItem('gallery_data')) || initialImages;
 let isManageMode = false;
+let isLoggedIn = false;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -98,18 +101,34 @@ function setupEventListeners() {
     const manageBtn = document.getElementById('manageBtn');
     const resetBtn = document.getElementById('resetBtn');
     const addBtn = document.getElementById('addBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    
     manageBtn.addEventListener('click', () => {
-        isManageMode = !isManageMode;
-        manageBtn.textContent = isManageMode ? '結束管理' : '管理模式';
-        manageBtn.style.background = isManageMode ? 'linear-gradient(135deg, #f43f5e, #e11d48)' : 'linear-gradient(135deg, #38bdf8, #2563eb)';
-        resetBtn.style.display = isManageMode ? 'block' : 'none';
-        addBtn.style.display = isManageMode ? 'block' : 'none';
-        renderGallery(searchInput.value);
+        if (!isLoggedIn) {
+            document.getElementById('loginModal').style.display = 'flex';
+        } else {
+            toggleManageMode();
+        }
+    });
+
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const pwd = document.getElementById('loginPassword').value;
+        if (pwd === ADMIN_PASSWORD) {
+            isLoggedIn = true;
+            closeLoginModal();
+            toggleManageMode();
+        } else {
+            alert('密碼錯誤！');
+        }
     });
 
     addBtn.addEventListener('click', () => {
         document.getElementById('addModal').style.display = 'flex';
     });
+
+    exportBtn.addEventListener('click', openExportModal);
 
     resetBtn.addEventListener('click', () => {
         if (confirm('確定要重設所有模型資料嗎？這將會覆蓋您目前的修改。')) {
@@ -152,6 +171,46 @@ function closeModal() {
 function closeAddModal() {
     document.getElementById('addModal').style.display = 'none';
     document.getElementById('addForm').reset();
+}
+
+function openExportModal() {
+    const exportArea = document.getElementById('exportArea');
+    // Format JSON with nice indentation
+    const jsonStr = JSON.stringify(galleryData, null, 4);
+    exportArea.value = jsonStr;
+    document.getElementById('exportModal').style.display = 'flex';
+}
+
+function closeExportModal() {
+    document.getElementById('exportModal').style.display = 'none';
+}
+
+function closeLoginModal() {
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('loginPassword').value = '';
+}
+
+function toggleManageMode() {
+    const manageBtn = document.getElementById('manageBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const addBtn = document.getElementById('addBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const searchInput = document.getElementById('searchInput');
+
+    isManageMode = !isManageMode;
+    manageBtn.textContent = isManageMode ? '結束管理' : '管理模式';
+    manageBtn.style.background = isManageMode ? 'linear-gradient(135deg, #f43f5e, #e11d48)' : 'linear-gradient(135deg, #38bdf8, #2563eb)';
+    resetBtn.style.display = isManageMode ? 'block' : 'none';
+    addBtn.style.display = isManageMode ? 'block' : 'none';
+    exportBtn.style.display = isManageMode ? 'block' : 'none';
+    renderGallery(searchInput.value);
+}
+
+function copyExportCode() {
+    const exportArea = document.getElementById('exportArea');
+    exportArea.select();
+    document.execCommand('copy');
+    alert('代碼已複製到剪貼簿！');
 }
 
 function deleteImage(id) {
@@ -244,10 +303,18 @@ function closeLightbox() {
 window.onclick = function(event) {
     const editModal = document.getElementById('editModal');
     const addModal = document.getElementById('addModal');
+    const exportModal = document.getElementById('exportModal');
+    const loginModal = document.getElementById('loginModal');
     if (event.target == editModal) {
         closeModal();
     }
     if (event.target == addModal) {
         closeAddModal();
+    }
+    if (event.target == exportModal) {
+        closeExportModal();
+    }
+    if (event.target == loginModal) {
+        closeLoginModal();
     }
 }

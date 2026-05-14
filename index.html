@@ -19,6 +19,7 @@
                 <input type="text" id="searchInput" class="search-bar" placeholder="搜尋模型名稱 or 標籤...">
                 <button id="manageBtn" class="btn-primary">管理模式</button>
                 <button id="addBtn" class="btn-primary" style="background: #10b981; display: none;">新增圖片</button>
+                <button id="exportBtn" class="btn-primary" style="background: #8b5cf6; display: none;">匯出設定</button>
                 <button id="resetBtn" class="btn-primary" style="background: #475569; display: none;">重設資料</button>
             </div>
         </header>
@@ -96,6 +97,38 @@
             </form>
         </div>
     </div>
+    <!-- Export Modal -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <h2 style="margin-bottom: 1rem;">匯出設定檔</h2>
+            <p style="color: #94a3b8; margin-bottom: 1rem; font-size: 0.9rem;">
+                請複製下方的代碼，並貼到 <code>script.js</code> 檔案中的 <code>initialImages</code> 變數裡。
+            </p>
+            <textarea id="exportArea" rows="15" style="width: 100%; font-family: monospace; font-size: 0.8rem; background: #0f172a; color: #38bdf8; border: 1px solid var(--glass-border); padding: 1rem; border-radius: 0.5rem;" readonly></textarea>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+                <button class="btn-primary" onclick="copyExportCode()">複製代碼</button>
+                <button class="btn-primary" style="background: #475569;" onclick="closeExportModal()">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <h2 style="margin-bottom: 1.5rem;">管理者登入</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>密碼</label>
+                    <input type="password" id="loginPassword" placeholder="請輸入管理密碼" required>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn-primary" style="background: #475569;" onclick="closeLoginModal()">取消</button>
+                    <button type="submit" class="btn-primary">登入</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
         <span class="close-btn">&times;</span>
         <img id="lightboxImg" src="" alt="完整檢視">
