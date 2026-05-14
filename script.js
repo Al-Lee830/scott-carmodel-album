@@ -1,26 +1,39 @@
 // Initial Data - Built from images in the folder
 const initialImages = [
-    {
-        id: '1',
-        url: 'images/ChatGPT Image 2026年5月13日 下午02_50_32.png',
-        title: '賽博龐克模型 A',
-        description: '具有霓虹燈光效果的詳細 3D 模型渲染圖。',
-        tags: ['賽博龐克', '3D', '霓虹']
-    },
-    {
-        id: '2',
-        url: 'images/ChatGPT Image 2026年5月13日 下午02_50_38.png',
-        title: '空靈景觀',
-        description: '色彩鮮豔且充滿超現實感的景觀設計。',
-        tags: ['超現實', '景觀', '藝術']
-    },
-    {
-        id: '3',
-        url: 'images/ChatGPT Image 2026年5月13日 下午04_24_09.png',
-        title: '現代建築模型',
-        description: '線條流暢的現代建築概念設計。',
-        tags: ['建築', '現代', '概念']
-    }
+    { id: '1', url: 'images/ChatGPT Image 2026年5月13日 下午02_50_32.png', title: 'Lexus LC500h', description: '奢華跑車，展現極致工藝與動力。', tags: ['Coupe', 'Lexus', '豪華'] },
+    { id: '2', url: 'images/ChatGPT Image 2026年5月13日 下午02_50_38.png', title: 'Toyota Supra', description: '經典傳奇跑車，追求純粹的操控樂趣。', tags: ['Sport', 'Toyota', '跑車'] },
+    { id: '3', url: 'images/ChatGPT Image 2026年5月13日 下午04_24_09.png', title: 'Peugeot 3008', description: '法式美學設計，卓越的都會休旅體驗。', tags: ['SUV', 'Peugeot', '家庭'] },
+    { id: '4', url: 'images/ChatGPT Image 2026年5月14日 上午09_35_17.png', title: 'Nissan GT-R', description: '東瀛戰神，賽道上的不敗神話。', tags: ['Sport', 'Nissan', '性能'] },
+    { id: '5', url: 'images/ChatGPT Image 2026年5月14日 上午09_35_21.png', title: 'Audi R8', description: '德系超跑經典，融合科技與速度。', tags: ['Supercar', 'Audi', '極速'] },
+    { id: '6', url: 'images/placeholder.png', title: 'Mazda MX-5', description: '輕巧靈活的敞篷跑車。', tags: ['Roadster', 'Mazda'] },
+    { id: '7', url: 'images/placeholder.png', title: 'BMW M4', description: '性能房車的標竿。', tags: ['Sedan', 'BMW', '性能'] },
+    { id: '8', url: 'images/placeholder.png', title: 'Mercedes-Benz G-Class', description: '越野之王，硬派與奢華的結合。', tags: ['SUV', 'Mercedes-Benz', '越野'] },
+    { id: '9', url: 'images/placeholder.png', title: 'Ford Mustang', description: '美式肌肉車代表，狂野不羈。', tags: ['Muscle', 'Ford'] },
+    { id: '10', url: 'images/placeholder.png', title: 'Porsche 911', description: '永恆的跑車設計圖騰。', tags: ['Sport', 'Porsche'] },
+    { id: '11', url: 'images/placeholder.png', title: 'Honda Civic Type R', description: '最強前驅鋼砲。', tags: ['Hatchback', 'Honda'] },
+    { id: '12', url: 'images/placeholder.png', title: 'Tesla Model S', description: '純電豪華轎車的先驅。', tags: ['EV', 'Tesla'] },
+    { id: '13', url: 'images/placeholder.png', title: 'Ferrari F8', description: '躍馬精神，極致的動力美學。', tags: ['Supercar', 'Ferrari'] },
+    { id: '14', url: 'images/placeholder.png', title: 'Lamborghini Huracan', description: '狂暴的颶風超跑。', tags: ['Supercar', 'Lamborghini'] },
+    { id: '15', url: 'images/placeholder.png', title: 'Subaru WRX STI', description: '拉力賽血統的四驅戰將。', tags: ['Sedan', 'Subaru'] },
+    { id: '16', url: 'images/placeholder.png', title: 'Volvo XC90', description: '安全與北歐簡約設計的典範。', tags: ['SUV', 'Volvo'] },
+    { id: '17', url: 'images/placeholder.png', title: 'Jaguar F-Type', description: '優雅與野性並存的英式跑車。', tags: ['Coupe', 'Jaguar'] },
+    { id: '18', url: 'images/placeholder.png', title: 'Land Rover Defender', description: '重塑經典的越野傳奇。', tags: ['SUV', 'Land Rover'] },
+    { id: '19', url: 'images/placeholder.png', title: 'Maserati GranTurismo', description: '浪漫的海神超跑。', tags: ['GT', 'Maserati'] },
+    { id: '20', url: 'images/placeholder.png', title: 'McLaren 720S', description: '極致空氣動力學的結晶。', tags: ['Supercar', 'McLaren'] },
+    { id: '21', url: 'images/placeholder.png', title: 'Bentley Continental GT', description: '頂級豪奢的長途壯遊車。', tags: ['GT', 'Bentley'] },
+    { id: '22', url: 'images/placeholder.png', title: 'Aston Martin DB11', description: '英倫紳士般的優雅超跑。', tags: ['GT', 'Aston Martin'] },
+    { id: '23', url: 'images/placeholder.png', title: 'Mini Cooper S', description: '靈活有趣的英倫小車。', tags: ['Hatchback', 'Mini'] },
+    { id: '24', url: 'images/placeholder.png', title: 'Volkswagen Golf GTI', description: '掀背鋼砲的代名詞。', tags: ['Hatchback', 'Volkswagen'] },
+    { id: '25', url: 'images/placeholder.png', title: 'Jeep Wrangler', description: '硬派越野，享受大自然的冒險。', tags: ['SUV', 'Jeep'] },
+    { id: '26', url: 'images/placeholder.png', title: 'Dodge Challenger', description: '正宗美式肌肉精神。', tags: ['Muscle', 'Dodge'] },
+    { id: '27', url: 'images/placeholder.png', title: 'Rolls-Royce Phantom', description: '車中之王，無與倫比的靜謐。', tags: ['Sedan', 'Rolls-Royce'] },
+    { id: '28', url: 'images/placeholder.png', title: 'Bugatti Chiron', description: '地表最強、最快的量產車之一。', tags: ['Hypercar', 'Bugatti'] },
+    { id: '29', url: 'images/placeholder.png', title: 'Alfa Romeo Giulia', description: '義式激情的絕美房車。', tags: ['Sedan', 'Alfa Romeo'] },
+    { id: '30', url: 'images/placeholder.png', title: 'Lotus Emira', description: '最後的燃油輕量化跑車。', tags: ['Sport', 'Lotus'] },
+    { id: '31', url: 'images/placeholder.png', title: 'Genesis G80', description: '韓系新貴，優雅與科技的交織。', tags: ['Sedan', 'Genesis'] },
+    { id: '32', url: 'images/placeholder.png', title: 'Hyundai Ioniq 5', description: '未來感十足的純電休旅。', tags: ['EV', 'Hyundai'] },
+    { id: '33', url: 'images/placeholder.png', title: 'Kia EV6', description: '高性能純電跨界跑旅。', tags: ['EV', 'Kia'] },
+    { id: '34', url: 'images/placeholder.png', title: 'Cadillac Escalade', description: '美式巨無霸豪華 SUV。', tags: ['SUV', 'Cadillac'] }
 ];
 
 // List of all images currently in the images folder
@@ -29,7 +42,8 @@ const availableImagesInFolder = [
     'ChatGPT Image 2026年5月13日 下午02_50_38.png',
     'ChatGPT Image 2026年5月13日 下午04_24_09.png',
     'ChatGPT Image 2026年5月14日 上午09_35_17.png',
-    'ChatGPT Image 2026年5月14日 上午09_35_21.png'
+    'ChatGPT Image 2026年5月14日 上午09_35_21.png',
+    'placeholder.png'
 ];
 
 const ADMIN_PASSWORD = 'admin'; // 您可以在此修改管理密碼
